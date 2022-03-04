@@ -6,7 +6,7 @@
   :sources "spec/*.savi"
 
   :dependency DeterministicRandom v0
-    // TODO: :from "github:savi-lang/DeterministicRandom"
+    :from "github:savi-lang/DeterministicRandom"
     :depends on Random
 
   :dependency Spec v0
