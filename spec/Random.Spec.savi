@@ -85,3 +85,25 @@
     total U32 = 0
     count.times -> (total += random.unbiased_u32_less_than(52))
     assert: (total.f32 / count.f32) == 25.514451980590820
+
+  :it "generates UUIDs version 4, variant 1"
+    random = DeterministicRandom.Xoroshiro128.new_128(1, 2)
+    uuid = random.uuid
+
+    parts = uuid.split('-')
+    version = try (parts[2]![0]! | 0)
+    variant = try (parts[3]![0]! | 0)
+
+    assert: parts.size == 5
+    assert: version == '4'
+    assert: (variant == '8' || variant == '9' || variant == 'a' || variant == 'b')
+
+  :it "randomizes new UUIDs"
+    random = DeterministicRandom.Xoroshiro128.new_128(1, 2)
+
+    assert: random.uuid == "00000000-0002-480a-9e22-849bc9ac31c5"
+    assert: random.uuid == "17790d7c-94fc-432b-85b8-799c7d57e6e2"
+    assert: random.uuid == "ce02863c-939d-4490-bad2-4eb1399435f7"
+    assert: random.uuid == "67bfb33d-3091-4d04-a9fa-40d7f422112c"
+    assert: random.uuid == "736b0441-e75d-4742-9554-db0cd6acfd34"
+
