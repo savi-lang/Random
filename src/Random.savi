@@ -167,3 +167,17 @@
     |
       @unbiased_u64_less_than(limit.u64).usize
     )
+
+  :: Return a UUID version 4 variant 1.
+  :fun ref uuid String
+    "\(
+      @u32.format.hex.bare
+    )-\(
+      @u16.format.hex.bare
+    )-\(
+      @u16.bit_and(0x0fff).bit_or(0x4000).format.hex.bare
+    )-\(
+      @u16.bit_and(0x3fff).bit_or(0x8000).format.hex.bare
+    )-\(
+      @u32.format.hex.bare)\(@u16.format.hex.bare
+    )"
