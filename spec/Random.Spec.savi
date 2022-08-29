@@ -107,3 +107,10 @@
     assert: random.uuid == "67bfb33d-3091-4d04-a9fa-40d7f422112c"
     assert: random.uuid == "736b0441-e75d-4742-9554-db0cd6acfd34"
 
+  :it "generates an Array of arbitrary random bytes"
+    random = DeterministicRandom.Xoroshiro128.new_128(1, 2)
+    bytes = random.random_bytes(54)
+
+    assert: bytes <: Bytes
+    assert: bytes.size == 54
+    assert: random.random_bytes(0).is_empty
