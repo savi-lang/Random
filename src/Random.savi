@@ -105,9 +105,9 @@
     product = random.u64.wide_multiply(limit)
     // Reject and try again if the tail happens to be in the zone of bias.
     // The loop will continue generating new numbers until we get a good sample.
-    if (product.tail < limit) (
+    if product.tail < limit (
       threshold = limit.negate % limit
-      while (product.tail < threshold) (
+      while product.tail < threshold (
         product = random.u64.wide_multiply(limit)
       )
     )
@@ -128,9 +128,9 @@
     product = random.u32.wide_multiply(limit)
     // Reject and try again if the tail happens to be in the zone of bias.
     // The loop will continue generating new numbers until we get a good sample.
-    if (product.tail < limit) (
+    if product.tail < limit (
       threshold = limit.negate % limit
-      while (product.tail < threshold) (
+      while product.tail < threshold (
         product = random.u32.wide_multiply(limit)
       )
     )
@@ -146,7 +146,7 @@
   :: If you need fully unbiased results, use the `unbiased_u32_less_than`
   :: method instead, which discards all samples from the biased zone.
   :fun ref usize_less_than(limit USize)
-    if (USize.bit_width == 32) (
+    if USize.bit_width == 32 (
       @u32_less_than(limit.u32).usize
     |
       @u64_less_than(limit.u64).usize
@@ -162,7 +162,7 @@
   :: To keep maximum performance at the cost of some possibility of bias,
   :: use the `uSize_less_than` method instead, which never discards results.
   :fun ref unbiased_usize_less_than(limit USize) USize
-    if (USize.bit_width == 32) (
+    if USize.bit_width == 32 (
       @unbiased_u32_less_than(limit.u32).usize
     |
       @unbiased_u64_less_than(limit.u64).usize
@@ -186,7 +186,7 @@
   :fun ref random_bytes(size USize) Bytes
     bytes = Bytes.new_iso(size)
 
-    while (size > 0) (
+    while size > 0 (
       case size > (
       | 8 | bytes.push_native_u64(@u64), size -= 8
       | 4 | bytes.push_native_u32(@u32), size -= 4
